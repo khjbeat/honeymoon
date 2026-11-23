@@ -173,7 +173,9 @@ nav.tabs button[aria-selected="true"]{color:var(--lake);font-weight:700}
 
 <script>
 const G = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
-const DIR = (o,d) => "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(o) + "&destination=" + encodeURIComponent(d) + "&travelmode=driving";
+const DIR = (o,d,w) => "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(o) + "&destination=" + encodeURIComponent(d) + (w ? "&waypoints=" + encodeURIComponent(w) : "") + "&travelmode=driving";
+const MAUI_ZQN = "9 Purple Ash Avenue, Frankton, Queenstown 9300";
+const MAUI_CHC = "159 Orchard Road, Harewood, Christchurch 8051";
 
 const DAYS = [
  {date:"2026-12-13", c:"au", place:"시드니", title:"출국, 시드니 도착",
@@ -184,27 +186,38 @@ const DAYS = [
   todo:[["공항 → 시내","공항 철도(T8)는 교통카드 없이 신용카드 태그로 탑승 가능",null]],
   tips:[["warn","<b>호주 ETA</b> 승인 여부를 출국 전 다시 확인하세요."],["","시드니는 한국보다 2시간 빠릅니다."]]
  },
- {date:"2026-12-14", c:"au", place:"시드니", title:"시드니 해변과 별",
+ {date:"2026-12-14", c:"au", place:"시드니", title:"본다이에서 쿠지까지 바닷길 걷기",
   stay:{kind:"hotel", name:"뷰 시드니", meta:"2박째", q:"View Sydney hotel"},
-  times:[["오전","쿠지 → 브론테 → 본다이 해안 산책"],["저녁","시드니 천문대 / 다알링하버"],["이른 취침","내일 04:00 체크아웃"]],
-  legs:[],
-  eat:[],
-  todo:[["쿠지–본다이 해안 산책로","약 6km, 2~3시간. 중간 브론테 비치에서 쉬어가기","Bondi to Coogee Coastal Walk"],
-        ["브론테 비치","해안 산책로 중간의 작은 해변·수영장","Bronte Beach Sydney"],
+  times:[["오전","본다이에서 브런치 후 아이스버그 풀"],["낮","본다이 → 타마라마 → 브론테 → 클로벨리 → 쿠지 해안 산책 (약 6km)"],["오후","쿠지 파빌리온에서 맥주와 피시앤칩스"],["저녁","버스로 복귀, 여유 있으면 천문대·다알링하버"],["이른 취침","내일 04:00 체크아웃"]],
+  legs:[["본다이 비치","쿠지 비치","도보 약 6km · 쉬지 않으면 2~3시간, 수영·사진·식사 포함 6~8시간","Bondi Icebergs Pool","Coogee Beach"]],
+  eat:[["Blackwood Bondi","본다이 비치에서 걸어서 10분, 인기 브런치. 주말엔 웨이팅 (14일은 월요일)","Blackwood Bondi, 87 Glenayr Ave, Bondi Beach"],
+       ["Bare Naked Bowls","블랙우드에서 해변 내려가는 길의 아사이볼","Bare Naked Bowls Bondi Beach"],
+       ["Coogee Pavilion","산책 끝나고 맥주와 피시앤칩스로 마무리","Coogee Pavilion"]],
+  todo:[["1. 본다이 아이스버그 풀","바닷물 수영장. 성인 A$10, 수건·라커 각 A$5. 메인 풀은 깊고 차가워서 초보는 옆 낮은 풀. 목요일은 청소로 휴장할 수 있음","Bondi Icebergs Pool"],
+        ["2. 타마라마 비치","약 1km, 15~20분. 절벽 사이 작은 해변. 파도가 세니 수영은 깃발 안쪽에서만. 화장실 09:30~20:00","Tamarama Beach"],
+        ["3. 브론테 비치","약 1km, 15~20분. 잔디 피크닉, 무료 오션풀(수요일 청소 시간엔 잠시 닫힘)","Bronte Beach"],
+        ["4. 클로벨리 비치","약 1.5km, 25~45분. 묘지 옆 절벽길과 계단, 사진 스폿 많음. 천연 수영장처럼 잔잔해서 물놀이·스노클링 하기 가장 편함","Clovelly Beach"],
+        ["고든스 베이","클로벨리에서 약 1km, 15분. 투명한 바다와 바위 풀, 스노클링 명소. 화장실이 없으니 클로벨리에서 미리","Gordons Bay"],
+        ["5. 쿠지 비치","약 1.5km, 20~30분. 해안 카페가 모여 있는 마무리 지점. 화장실·샤워·라커는 해변 앞 Lower Promenade","Coogee Beach"],
+        ["본다이로 돌아가기","쿠지 뒤편 Arden St opp Coogee Bay Rd 정류장에서 350번 → Bronte Rd at Carrington Rd 하차 → 379번 환승. 약 35~45분","Arden St opp Coogee Bay Rd"],
         ["시드니 천문대","옵저버토리 힐. 야간 관측 프로그램은 사전 예약","Sydney Observatory"],
         ["다알링하버 크리스마스 트리","물 위에 뜬 트리, 12/26까지","Cockle Bay Darling Harbour"]],
-  tips:[["","다음 날 새벽 비행기라 짐은 미리 싸두세요."]]
+  tips:[["","계단과 오르막이 많아요. 편한 샌들, 수영복, 선크림, 물 챙기기."],["","다 걷기 힘들면 가장 인기 있는 브론테 → 쿠지 구간(약 3km)만 걸어도 좋아요. 본다이~브론테 구간 잔디밭도 사진 명소예요."],["","다음 날 새벽 비행기라 짐은 미리 싸두세요."]]
  },
  {date:"2026-12-15", c:"nz", place:"테아나우", camper:true, title:"뉴질랜드 입국, 캠핑카 시작",
   stay:{kind:"park", name:"테아나우 레이크뷰 홀리데이 파크", meta:"1박 · NZ$75", q:"Te Anau Lakeview Holiday Park"},
-  times:[["04:00","체크아웃"],["05:00","시드니 공항 도착"],["06:30","시드니 → 퀸즈타운"],["11:30","퀸즈타운 도착 (NZ 시각)"],["12:00","더캠퍼밴 캠핑카 수령"],["14:30","장보기 후 테아나우로 이동"],["20:00","캠핑장 도착"]],
-  legs:[["퀸즈타운 공항","테아나우","약 170km · 2시간","Queenstown Airport","Te Anau Lakeview Holiday Park"]],
+  times:[["04:00","체크아웃"],["05:00","시드니 공항 도착"],["06:30","시드니 → 퀸즈타운"],["11:10","퀸즈타운 도착 예정 (예약서 기준, NZ 시각)"],["12:00","maui 퀸즈타운 지점에서 캠핑카 수령 (지점 영업 08:00–16:30)"],["수령 직후","장비 점검 + 더캠퍼밴 현지 서포트 카톡 등록"],["14:30","장보기 후 테아나우로 이동"],["17:00~20:00","캠핑장 도착, 바로 전원 연결해 충전 시작"]],
+  legs:[["퀸즈타운 공항","maui 퀸즈타운 지점","공항 근처 프랭크턴 · 차로 몇 분","Queenstown Airport",MAUI_ZQN],
+        ["maui 퀸즈타운 지점","테아나우","약 170km · 2시간",MAUI_ZQN,"Te Anau Lakeview Holiday Park"]],
   eat:[["Miles Better Pies","사슴고기 파이로 유명한 파이 가게. 호숫가에서 먹기 좋음","Miles Better Pies Te Anau"],
        ["Redcliff Cafe","테아나우 대표 저녁 식당. 사슴고기·양고기, 예약 권장","Redcliff Cafe Te Anau"],
        ["Sandfly Cafe","아침 커피와 브런치","Sandfly Cafe Te Anau"]],
-  todo:[["퀸즈타운 장보기","캠핑 첫 장보기는 공항 근처 대형마트에서","supermarket Frankton Queenstown"],
+  todo:[["maui 퀸즈타운 지점","9 Purple Ash Avenue, Frankton. 여권·운전면허(영문 번역 또는 국제면허)·신용카드·예약 서류 지참",MAUI_ZQN],
+        ["수령 때 장비 점검","파워 코드, 오수 호스, 청수 호스와 어댑터, 화장실 케미컬, 테이블·의자 수량, 전기 히터. 문제가 있으면 지점을 떠나기 전에 해결",null],
+        ["현지 서포트 카톡 등록","더캠퍼밴 안내 PDF의 카톡 ID를 친구 추가하고 바우처 사진, 차량 전면 사진(번호판 보이게), 휴대폰 번호 보내기",null],
+        ["퀸즈타운 장보기","캠핑 첫 장보기는 지점 근처 프랭크턴 대형마트에서","supermarket Frankton Queenstown"],
         ["테아나우 반딧불 동굴","호수 크루즈 + 동굴 투어, 저녁 시간대","Te Anau Glowworm Caves"]],
-  tips:[["warn","<b>좌측 통행</b>이고 첫날은 장시간 비행 후 운전입니다. 교대로 운전하세요."],["","뉴질랜드는 시드니보다 2시간, 한국보다 4시간 빠릅니다."]]
+  tips:[["warn","<b>오늘 밤 하우스 배터리 완충:</b> 차는 배터리가 덜 찬 상태로 나와요. 첫날은 전원 사이트에서 14시간 이상 충전하라는 게 더캠퍼밴 안내예요. 테아나우 예약이 전원(파워) 사이트인지 확인하세요."],["warn","<b>비행기가 늦어 16:30 전에 지점 도착이 어려우면</b> 노쇼로 예약이 취소될 수 있어요. 바로 maui나 더캠퍼밴 현지 서포트에 연락하세요."],["warn","<b>수령할 때</b> 차량 상태 보고서에 기존 흠집을 빠짐없이 적고 사진을 찍어 두세요. 적혀 있지 않은 흠집은 반납 때 우리 책임이 됩니다."],["warn","<b>캠핑카 제한속도는 90km/h</b>예요(운전 서약). 좌측 통행이고 첫날은 장시간 비행 후 운전이니 교대로 운전하세요."],["","뉴질랜드는 시드니보다 2시간, 한국보다 4시간 빠릅니다."]]
  },
  {date:"2026-12-16", c:"nz", place:"퀸즈타운", camper:true, title:"피오르드랜드 → 퀸즈타운",
   stay:{kind:"park", name:"퀸즈타운 레이크뷰 홀리데이 파크", meta:"1박 · NZ$70.31", q:"Queenstown Lakeview Holiday Park"},
@@ -217,10 +230,10 @@ const DAYS = [
         ["밀포드 사운드 크루즈","하는 경우 이동만 왕복 4시간 + 퀸즈타운까지 2시간. 크루즈 사전 예약","Milford Sound cruise terminal"]],
   tips:[["warn","<b>밀포드를 넣으면</b> 하루 운전이 6시간 이상입니다. 넣을지 미리 정해 두세요."],["","밀포드 가는 길(94번 도로)은 주유소가 거의 없습니다. 테아나우에서 가득 채우세요."]]
  },
- {date:"2026-12-17", c:"nz", place:"와나카", camper:true, title:"크라운 레인지 넘어 와나카",
+ {date:"2026-12-17", c:"nz", place:"와나카", camper:true, title:"크롬웰 돌아 와나카로",
   stay:{kind:"park", name:"Hampshire Holiday Parks – Glendhu Bay", meta:"1박 · NZ$72 · 호숫가", q:"Glendhu Bay Holiday Park Wanaka"},
-  times:[["오전","퀸즈타운 출발, 애로우타운 들르기"],["오후","와나카 시내"],["저녁","글렌두 베이 호숫가 노을"]],
-  legs:[["퀸즈타운","글렌두 베이","약 80km · 1시간 20분 (크라운 레인지)","Queenstown","Glendhu Bay Holiday Park Wanaka"]],
+  times:[["오전","퀸즈타운 출발, 애로우타운 들르기"],["점심","크롬웰 경유 (과일 가게·호숫가)"],["오후","와나카 시내"],["저녁","글렌두 베이 호숫가 노을"]],
+  legs:[["퀸즈타운","글렌두 베이","약 125km · 1시간 45분 (크롬웰 경유)","Queenstown Lakeview Holiday Park","Glendhu Bay Holiday Park Wanaka","Cromwell, New Zealand"]],
   eat:[["Big Fig","중동풍 슬로우푸드, 빠르게 먹기 좋음","Big Fig Wanaka"],
        ["Federal Diner","골목 안 현지인 브런치·저녁","Federal Diner Wanaka"],
        ["Kika","와나카에서 특별한 저녁 한 끼, 예약 필수","Kika Wanaka"],
@@ -228,7 +241,7 @@ const DAYS = [
   todo:[["That Wanaka Tree","호수 속 나무, 해 질 녘 사진 명소","That Wanaka Tree"],
         ["애로우타운","금광 마을 산책, 퀸즈타운에서 20분","Arrowtown"],
         ["마운트 아이언","왕복 1.5시간 가벼운 전망 산책","Mount Iron Track Wanaka"]],
-  tips:[["","크라운 레인지는 굽은 오르막입니다. 캠핑카는 천천히, 전망대에서 쉬어가세요."]]
+  tips:[["warn","<b>크라운 레인지 도로는 캠핑카 운행 금지</b>입니다(렌트 약관·운전 서약). 어기면 보험(플래티넘 팩)이 무효가 돼요. 구글맵이 크라운 레인지로 안내해도 따르지 말고, 위 길찾기 버튼은 크롬웰을 거치도록 설정해 두었어요."],["","글렌두 베이는 마운트 아스파이어링 도로의 트레블콘 입구보다 앞이라 괜찮지만, 그 너머로는 캠핑카 운행이 금지돼요."]]
  },
  {date:"2026-12-18", c:"nz", place:"와나카 · 하웨아", camper:true, title:"하웨아 호수에서 쉬는 날",
   stay:{kind:"park", name:"레이크 하웨아 홀리데이 파크", meta:"1박 · NZ$142.2 (변경 중)", q:"Lake Hawea Holiday Park"},
@@ -251,7 +264,7 @@ const DAYS = [
         ["푸카키 일출","노지에서 맞는 일출이 이번 여행 하이라이트","Lake Pukaki"]],
   tips:[["warn","<b>노지 조건:</b> 셀프 컨테인드 인증 차량만 가능하고, 2026년 6월 7일부터 차량에 그린 워런트 카드를 부착해야 합니다. 캠핑카 업체에 인증 여부를 꼭 확인하세요."],
         ["warn","<b>1박 제한·선착순</b>이고 화장실은 몇백 미터 떨어진 재래식입니다. 늦게 가면 자리가 없을 수 있어요."],
-        ["","만석이면 트위젤 근처 루아타니화 호수 서쪽 끝 노지나, 시트에 적어둔 글렌태너 파크(NZ$86)를 대안으로."]]
+        ["","만석이면 트위젤 근처 루아타니화 호수 서쪽 끝 노지나, 시트에 적어둔 글렌태너 파크(NZ$86)를 대안으로."],["","노지에서는 전자레인지와 벽 콘센트가 작동하지 않아요. 조명·냉장고·물 펌프·히터는 하우스 배터리로 돌아가니 아껴 쓰세요."]]
  },
  {date:"2026-12-20", c:"nz", place:"테카포", camper:true, title:"테카포 호수와 남반구 별",
   stay:{kind:"park", name:"Lakes Edge Holiday Park", meta:"12/20–22 · 2박 · NZ$152", q:"Lakes Edge Holiday Park Tekapo"},
@@ -262,7 +275,7 @@ const DAYS = [
   todo:[["선한 목자의 교회","호숫가 작은 돌 교회","Church of the Good Shepherd Tekapo"],
         ["테카포 스프링스","온천 풀에서 피로 풀기","Tekapo Springs"],
         ["별 관측 투어","다크 스카이 보호구역. 투어는 사전 예약","Dark Sky Project Tekapo"]],
-  tips:[["","12월은 해가 늦게 져서 밤 11시는 넘어야 별이 잘 보입니다."]]
+  tips:[["warn","<b>노지 다음 날이라 배터리 충전이 필요해요.</b> 2박 동안 전원 사이트에 연결해 두세요. 엑셀에는 스탠다드 NZ$76으로 적혀 있는데, 전원(파워) 사이트인지 꼭 확인하세요."],["","12월은 해가 늦게 져서 밤 11시는 넘어야 별이 잘 보입니다."]]
  },
  {date:"2026-12-21", c:"nz", place:"테카포", camper:true, title:"테카포에서 느긋하게",
   stay:{kind:"park", name:"Lakes Edge Holiday Park", meta:"2박째", q:"Lakes Edge Holiday Park Tekapo"},
@@ -291,15 +304,16 @@ const DAYS = [
        ["Akaroa Fish & Chips","항구 앞 피시앤칩스","Akaroa Fish and Chips"]],
   todo:[["헥터 돌고래 크루즈","세계에서 가장 작은 돌고래. 블랙캣 크루즈 또는 아카로아 돌핀스, 약 2시간","Black Cat Cruises Akaroa"],
         ["아카로아 등대","항구 끝 산책","Akaroa Lighthouse"]],
-  tips:[["","내일 반납 전에 오수 비우기·청소·주유를 할 수 있게 오늘 정리해 두면 편합니다."]]
+  tips:[["warn","<b>티마루 노지 다음 날</b>이라 오늘은 전원 사이트에 연결해 충전하세요. 하버뷰 캠퍼밴 사이트가 전원 사이트인지 확인해 두세요."],["","오수 비우기와 청소는 예약에 포함된 Drop and Go 팩으로 지점에서 해줘요. 내일은 연료만 수령 때만큼 채우면 됩니다."]]
  },
  {date:"2026-12-24", c:"au", place:"크라이스트처치 → 시드니", camper:true, title:"캠핑카 반납, 다시 시드니",
   stay:{kind:"hotel", name:"맨트라 온 켄트", meta:"12/24–27 · 3박 (호텔)", q:"Mantra on Kent Sydney"},
-  times:[["오전","아카로아 출발"],["16:00","더캠퍼밴 캠핑카 반납"],["18:00","크라이스트처치 → 시드니 (NZ 시각)"],["밤","시드니 도착, 호텔 체크인"]],
-  legs:[["아카로아","크라이스트처치 공항","약 95km · 1시간 30분","Akaroa TOP 10 Holiday Park","Christchurch Airport"]],
-  eat:[],
-  todo:[["반납 전 할 일","주유, 오수·생활하수 비우기, 내부 정리, 차량 사진 찍기",null]],
-  tips:[["warn","<b>반납 16:00, 출발 18:00</b>은 빠듯합니다. 반납 장소에서 공항까지 이동 시간을 업체에 확인하고, 가능하면 더 일찍 반납하세요."],
+  times:[["오전","아카로아 출발"],["15:00","maui 크라이스트처치 공항 지점 반납 (권장)"],["16:30","반납 마감 · 지점 영업 종료"],["18:00","크라이스트처치 → 시드니 (NZ 시각)"],["밤","시드니 도착, 호텔 체크인"]],
+  legs:[["아카로아","maui 크라이스트처치 공항 지점","약 95km · 1시간 30분","Akaroa TOP 10 Holiday Park",MAUI_CHC]],
+  eat:[["Mamak (마막)","차이나타운 입구 말레이시아 로띠 맛집, 숙소에서 걸어갈 거리. 예약 안 받고 줄 서지만 빨리 빠짐. 로띠 짜나이·사테·아얌 고렝, 디저트로 로띠 티수. 저녁 영업 22:00까지(목요일 기준)라 늦은 도착 날 저녁으로 좋아요. 크리스마스이브 영업시간은 확인","Mamak Haymarket 15 Goulburn Street"],["마틴 플레이스 크리스마스 마켓","24일이 올해 마지막 날, 11:00~21:15. 도착이 빠르면 들러볼 만해요. 숙소에서 걸어갈 거리","Martin Place Sydney"],["Woolworths Sydney Town Hall","도착 후 영업 중이면 납작복숭아 찾아보기. 크리스마스 당일은 휴무라 늦은 도착이면 영업시간 먼저 확인","Woolworths Town Hall Sydney"]],
+  todo:[["maui 크라이스트처치 공항 지점","159 Orchard Road, Harewood. 반납 후 공항 터미널까지 가는 방법을 지점에 확인",MAUI_CHC],
+        ["반납 전 할 일","연료를 수령 때만큼 채우기(부족분 리터당 NZ$5), 쓰레기 봉투에 담기, 차량 사진 찍기. 오수·청소는 Drop and Go 팩 포함",null]],
+  tips:[["warn","<b>16:30이 반납 마감이자 지점 영업 종료</b>입니다. 늦으면 NZ$150 연체료와 추가 요금이 붙고, 지점이 닫힌 뒤엔 다음 영업 시간에 반납한 것으로 처리돼요. 25일은 전 지점 휴무라 더 불리합니다. 비행기가 18:00이니 15:00 전 반납을 목표로 하세요."],
         ["","크리스마스 이브라 시드니 늦은 시간 식당이 일찍 닫을 수 있어요."]]
  },
  {date:"2026-12-25", c:"au", place:"시드니", title:"시드니의 크리스마스",
@@ -308,17 +322,28 @@ const DAYS = [
   legs:[],
   eat:[],
   todo:[["다알링하버 크리스마스 트리","12/26까지 운영","Cockle Bay Darling Harbour"],
-        ["오페라하우스 · 서큘러 키","하버 산책","Circular Quay"]],
+        ["오페라하우스 · 서큘러 키","하버 산책. 서큘러 키 난간에서 찍는 오페라하우스 뷰가 사진 명소","Circular Quay"],
+        ["마틴 플레이스 크리스마스 트리","NSW에서 가장 큰 트리. 매일 저녁 빛과 음악 쇼(1월 5일까지). 숙소에서 걸어갈 거리","Martin Place Christmas Tree"],
+        ["시드니 대학교 아치","쿼드랭글 아치 사진 명소. 자카란다는 10월 중순~11월 초라 이번엔 꽃은 없어요","University of Sydney Quadrangle"],
+        ["로툰다 전망대","오페라하우스·하버브리지 사진 명소. 가는 법: MCA 옆 크루즈 터미널(Overseas Passenger Terminal) 입구 쪽으로 쭉 걸어가 엘리베이터로 4층 → 밖으로 나와 원형 탑 계단을 올라가면 도착. 구글맵은 근처까지만 안내해줘요","Rotunda Observation Deck Overseas Passenger Terminal"]],
   tips:[["warn","<b>크리스마스 당일</b>은 대부분의 상점이 닫고 대중교통도 휴일 시간표입니다. 식사는 미리 예약하거나 24일에 사 두세요."]]
  },
  {date:"2026-12-26", c:"au", place:"시드니", title:"박싱데이, 시드니–호바트 요트 레이스",
   stay:{kind:"hotel", name:"맨트라 온 켄트", meta:"3박째", q:"Mantra on Kent Sydney"},
-  times:[["12:00 전","관람 장소 자리 잡기"],["13:00","시드니–호바트 요트 레이스 출발"],["오후","박싱데이 쇼핑"]],
+  times:[["10:00","더 록스 마켓 (서큘러 키 옆)"],["11:00","왓슨스 베이·닐슨 파크 쪽으로 이동 (페리·버스는 공휴일 시간표)"],["12:00 전","관람 장소 자리 잡기"],["13:00","시드니–호바트 요트 레이스 출발"],["오후","시내 복귀, 패디스 마켓·박싱데이 쇼핑"],["저녁","The Oaks (뉴트럴 베이) 또는 마틴 플레이스 트리 쇼"]],
   legs:[],
-  eat:[],
+  eat:[["Woolworths Sydney Town Hall","납작복숭아(Flat Peach) 찾아보기. 숙소에서 걸어갈 거리. 입고는 매장마다 달라서 없을 수도 있어요","Woolworths Town Hall Sydney"],
+       ["Betty's Burgers","호주산 앵거스 비프 수제버거와 어니언링. 구글 평점 4.5, 1인 A$20~40","Betty's Burgers Sydney"],
+       ["The Brothers cafe","폭신한 수플레 팬케이크, 흑임자 팬케이크 추천. 평점 4.2","The Brothers cafe Sydney"],
+       ["Yo-Chi","원하는 맛과 양을 담는 프로즌 요거트, 담기 전 시식 가능. 평점 4.7","Yo-Chi Sydney"],
+       ["The Oaks","80년 넘은 오크나무 아래 로컬 펍. 나무 조명은 18:30쯤 켜짐, 평일 저녁도 만석이라 일찍 가거나 예약. 프랭크스 핫윙 $24, 고구마튀김 $16, 생맥주 2잔 $24. 하버브리지 건너 뉴트럴 베이","The Oaks Hotel Neutral Bay"]],
   todo:[["닐슨 파크","레이스 출발선 바로 앞 관람 명소","Nielsen Park Vaucluse"],
         ["왓슨스 베이 · 사우스 헤드","요트가 바다로 나가는 장면","Watsons Bay"],
-        ["관람 크루즈","배 위에서 보는 상품도 있어요 (유료, 예약)",null]],
+        ["관람 크루즈","배 위에서 보는 상품도 있어요 (유료, 예약)",null],
+        ["더 록스 마켓","토요일 10:00~17:00. 화덕 피자 등 먹거리와 수공예품. 박싱데이 운영 여부는 확인 필요","The Rocks Markets"],
+        ["패디스 마켓","수~일 운영(월·화 휴무). 기념품 쇼핑. 숙소에서 걸어갈 거리","Paddys Markets Haymarket"],
+        ["글리브 마켓","토요일 10:00~16:00. 빈티지 옷과 소품. 박싱데이 운영 여부는 확인 필요","Glebe Markets"],
+        ["마틴 플레이스 트리 조명 쇼","저녁마다 빛과 음악 쇼","Martin Place Christmas Tree"]],
   tips:[["warn","<b>다알링하버 토요일 불꽃놀이</b>는 2026년 12월에 5·12·19일만 예정되어 있어 26일에는 없습니다. 대신 이날 오후 1시 요트 레이스 출발이 하버 최대 볼거리예요."]]
  },
  {date:"2026-12-27", c:"au", place:"시드니 → 인천", title:"집으로",
@@ -345,13 +370,18 @@ const CHECK = [
  {id:"a4",t:"캠핑카 셀프 컨테인드 인증(그린 워런트) 확인",s:"추가"},
  {id:"a5",t:"12/18 하웨아 숙소 변경 확정",s:"추가"},
  {id:"a6",t:"12/22 티마루 노지 확정 + Pay My Park 앱",s:"추가"},
- {id:"a7",t:"캠핑카 반납 장소·시간 재확인 (12/24 16:00)",s:"추가"},
+ {id:"a7",t:"반납 후 크라이스트처치 공항 터미널 이동 방법 확인 (12/24, 16:30 마감)",s:"추가"},
  {id:"a8",t:"밀포드 사운드 크루즈 (할 경우) 예약",s:"추가"},
  {id:"a9",t:"아카로아 돌고래 크루즈 예약",s:"추가"},
  {id:"a10",t:"테카포 별 관측 투어 예약",s:"추가"},
  {id:"a11",t:"레스토랑 예약 (Redcliff, Kika 등)",s:"추가"},
  {id:"a12",t:"시드니 크리스마스 저녁 예약",s:"추가"},
- {id:"a13",t:"귀마개 · 보조배터리 · 차량용 충전기",s:"추가"}
+ {id:"a13",t:"귀마개 · 보조배터리 · 차량용 충전기",s:"추가"},
+ {id:"a14",t:"예약 서류 3개를 앱에 저장 (각자 폰에서)",s:"추가"},
+ {id:"a15",t:"thl RoadTrip 앱 설치 (금지 도로 확인용)",s:"추가"},
+ {id:"a16",t:"테아나우·테카포·아카로아가 전원(파워) 사이트인지 확인",s:"추가"},
+ {id:"a17",t:"현지에서 연락되는 휴대폰 번호 (로밍 또는 지점 무료 SIM)",s:"추가"},
+ {id:"a18",t:"더캠퍼밴 안내 PDF 2개도 앱에 저장",s:"추가"}
 ];
 
 /* ---------- state (browser + shared db) ---------- */
@@ -438,7 +468,7 @@ function dayView(){
     h += '<section class="block"><h3>오늘 밤 잘 곳</h3><div class="stay"><span class="kind '+k+'">'+label+'</span><div class="name">'+esc(d.stay.name)+'</div><div class="meta">'+esc(d.stay.meta)+'</div><div class="links"><a class="btn primary" target="_blank" rel="noopener" href="'+G(d.stay.q)+'">지도에서 보기</a></div></div></section>';
   }
   if (d.times.length) h += '<section class="block"><h3>시간표</h3><ul class="timeline">'+d.times.map(t=>'<li><span class="t">'+esc(t[0])+'</span>'+esc(t[1])+'</li>').join("")+'</ul></section>';
-  if (d.legs.length) h += '<section class="block"><h3>이동</h3>'+d.legs.map(l=>'<div class="leg"><div class="ft">'+esc(l[0])+' → '+esc(l[1])+'</div><div class="km">'+esc(l[2])+'</div><div class="links"><a class="btn" target="_blank" rel="noopener" href="'+DIR(l[3],l[4])+'">길찾기</a></div></div>').join("")+'</section>';
+  if (d.legs.length) h += '<section class="block"><h3>이동</h3>'+d.legs.map(l=>'<div class="leg"><div class="ft">'+esc(l[0])+' → '+esc(l[1])+'</div><div class="km">'+esc(l[2])+'</div><div class="links"><a class="btn" target="_blank" rel="noopener" href="'+DIR(l[3],l[4],l[5])+'">길찾기</a></div></div>').join("")+'</section>';
   if (d.eat.length) h += '<section class="block"><h3>먹을 곳</h3><ul class="list">'+d.eat.map((e,i)=>placeRow("e",i,e,sel)).join("")+'</ul></section>';
   if (d.todo.length) h += '<section class="block"><h3>할 것 · 볼 것</h3><ul class="list">'+d.todo.map((e,i)=>placeRow("t",i,e,sel)).join("")+'</ul></section>';
   if (d.tips.length) h += '<section class="block"><h3>알아둘 것</h3><ul class="tips">'+d.tips.map(t=>'<li class="'+t[0]+'">'+t[1]+'</li>').join("")+'</ul></section>';
@@ -447,12 +477,12 @@ function dayView(){
 }
 
 const STOPS = [
- {n:"퀸즈타운",x:85,y:162,day:3},{n:"테아나우",x:22,y:198,day:2},{n:"글렌두 베이",x:110,y:128,day:4,left:true},
+ {n:"퀸즈타운",x:85,y:162,day:3},{n:"크롬웰",x:122,y:163,day:4,small:true},{n:"테아나우",x:22,y:198,day:2},{n:"글렌두 베이",x:110,y:128,day:4,left:true},
  {n:"하웨아",x:127,y:118,day:5,up:true},{n:"마운트 쿡",x:183,y:40,day:6,small:true},{n:"푸카키 노지",x:184,y:88,day:6,wild:true,left:true},
  {n:"테카포",x:209,y:66,day:7},{n:"티마루 노지",x:261,y:103,day:9,wild:true},{n:"아카로아",x:378,y:47,day:10},{n:"크라이스트처치",x:348,y:18,day:11}
 ];
 function routeView(){
-  const ordered = [[85,162],[22,198],[85,162],[110,128],[127,118],[183,40],[184,88],[209,66],[261,103],[378,47],[348,18]];
+  const ordered = [[85,162],[22,198],[85,162],[122,163],[110,128],[127,118],[183,40],[184,88],[209,66],[261,103],[378,47],[348,18]];
   const path = "M"+ordered.map(p=>p.join(",")).join(" L");
   let svg = '<svg viewBox="0 0 410 220" role="img" aria-label="뉴질랜드 남섬 캠핑카 경로"><path class="opt" d="M22,198 L45,128"/><text class="n" x="8" y="110">밀포드 (선택)</text><path class="road" d="'+path+'"/>';
   STOPS.forEach(s=>{
@@ -463,9 +493,9 @@ function routeView(){
   });
   svg += '</svg>';
   let h = '<section class="block"><h3>남섬 캠핑카 경로</h3><div class="mapcard">'+svg+'</div>';
-  h += '<div class="total"><div><b>9박</b>캠핑카</div><div><b>약 1,200km</b>밀포드 제외</div><div><b>2박</b>노지</div></div></section>';
+  h += '<div class="total"><div><b>9박</b>캠핑카</div><div><b>약 1,250km</b>밀포드 제외</div><div><b>2박</b>노지</div></div></section>';
   h += '<section class="block"><h3>구간별 이동</h3>';
-  DAYS.forEach((d,i)=>{ d.legs.forEach(l=>{ h += '<div class="leg"><div class="km">'+(dObj(d.date).getMonth()+1)+'/'+dObj(d.date).getDate()+'</div><div class="ft">'+esc(l[0])+' → '+esc(l[1])+'</div><div class="km">'+esc(l[2])+'</div><div class="links"><a class="btn" target="_blank" rel="noopener" href="'+DIR(l[3],l[4])+'">길찾기</a><button class="btn" data-goto="'+i+'">그날 일정</button></div></div>'; }); });
+  DAYS.forEach((d,i)=>{ d.legs.forEach(l=>{ h += '<div class="leg"><div class="km">'+(dObj(d.date).getMonth()+1)+'/'+dObj(d.date).getDate()+'</div><div class="ft">'+esc(l[0])+' → '+esc(l[1])+'</div><div class="km">'+esc(l[2])+'</div><div class="links"><a class="btn" target="_blank" rel="noopener" href="'+DIR(l[3],l[4],l[5])+'">길찾기</a><button class="btn" data-goto="'+i+'">그날 일정</button></div></div>'; }); });
   h += '</section><p class="sub">거리와 시간은 대략적인 값이에요. 실제 경로는 길찾기 버튼으로 확인하세요.</p>';
   return h;
 }
@@ -477,7 +507,36 @@ function checkView(){
   return h + '</ul></section>';
 }
 function infoView(){
-  return '<section class="block"><h3>시차</h3><table class="info">'+
+  return '<section class="block"><h3>예약 서류</h3><p class="prose">maui 예약 확인서, 렌트 약관, 운전 서약서를 이 폰에 저장해 두면 인터넷 없이도 열 수 있어요. 파일은 이 폰에만 저장되고 인터넷에 올라가지 않아요.</p><div id="docs"></div><label class="btn primary" style="margin-top:10px">파일 추가<input id="docfile" type="file" accept="application/pdf,image/*" multiple style="display:none"></label><div class="saved" id="docmsg"></div></section>'+
+   '<section class="block"><h3>캠핑카 예약 (maui)</h3><table class="info">'+
+   '<tr><td>차량</td><td>Ultima Plus Elite 2+1 Berth</td></tr>'+
+   '<tr><td>수령</td><td>12/15(화) 퀸즈타운 지점<br>9 Purple Ash Avenue, Frankton<br>영업 08:00–16:30 · <a target="_blank" rel="noopener" href="'+G(MAUI_ZQN)+'">지도</a></td></tr>'+
+   '<tr><td>반납</td><td>12/24(목) 16:30까지 크라이스트처치 공항 지점<br>159 Orchard Road, Harewood<br>영업 08:00–16:30 · <a target="_blank" rel="noopener" href="'+G(MAUI_CHC)+'">지도</a></td></tr>'+
+   '<tr><td>운전자</td><td>2명 등록</td></tr>'+
+   '<tr><td>보험·옵션</td><td>플래티넘 팩: 사고 자기부담금 NZ$0, 앞유리·타이어 보장, 긴급출동, Drop and Go(오수 비우기·청소)</td></tr>'+
+   '<tr><td>현지 결제</td><td>도착 시 잔액 NZ$0</td></tr>'+
+   '<tr><td>반납 때 정산</td><td>연료 부족분 리터당 NZ$5 · 디젤 차량이면 도로사용료 100km당 NZ$7.64 (1,250km면 약 NZ$95)</td></tr>'+
+   '<tr><td>카드 수수료</td><td>비자·마스터 2.71%, 현금 불가</td></tr>'+
+   '<tr><td>문의</td><td><a href="mailto:booking.maui@thlonline.com">booking.maui@thlonline.com</a></td></tr></table></section>'+
+   '<section class="block"><h3>고장 · 사고 · 도움 요청</h3><table class="info">'+
+   '<tr><td>maui On Road Care</td><td><a href="tel:0800688558">0800 688 558</a> (차 키에도 붙어 있음)</td></tr>'+
+   '<tr><td>더캠퍼밴 현지 서포트</td><td>카카오톡 (ID는 더캠퍼밴 안내 PDF 참고, 외부 공유 금지)<br>상담 09:00–17:00 NZ 시각<br>다치거나 범죄 피해, 운행 불가 사고는 시간과 상관없이 연락</td></tr>'+
+   '<tr><td>무료 의약 상담</td><td>감기 등 몸이 불편할 때 같은 카톡으로 현지 한인 약사 상담</td></tr>'+
+   '<tr><td>등록 방법</td><td>픽업 직후 친구 추가 → 바우처 사진, 차량 전면 사진, 휴대폰 번호 전송</td></tr></table>'+
+   '<p class="prose" style="margin-top:10px">공식 책임은 렌트 회사에 있어서 문제가 생기면 On Road Care에 직접 알려야 해요. 영어가 어려우면 현지 서포트에 먼저 연락하면 대신 소통해 줍니다.</p></section>'+
+   '<section class="block"><h3>하우스 배터리 관리</h3><ul class="tips">'+
+   '<li class="warn"><b>48시간 안에 한 번은 전원 사이트에서 충전</b>하세요. 노지 1박 뒤 14시간, 노지 2박 연속이면 16시간 이상 충전을 권장하고, 노지 3박 연속은 피하세요. 방전됐다면 24시간 충전이 필요해요.</li>'+
+   '<li>하우스 배터리로 돌아가는 것: 냉장고, 실내등, 환풍기, 물 펌프(주방·샤워·화장실), 가스레인지 점화, USB 포트, 디젤 히터. 전자레인지와 벽 콘센트는 외부 전원에 연결했을 때만 됩니다.</li>'+
+   '<li>전원 연결이 됐는지는 전자레인지나 벽 콘센트가 작동하는지로 확인하세요.</li>'+
+   '<li>방전돼도 시동은 걸려요. 추운 밤엔 시동을 켜고 차량 히터를 쓰거나, 라이터로 가스레인지를 켜 물을 데워 보온하세요.</li>'+
+   '<li>우리 일정의 노지(19일 푸카키, 22일 티마루)는 모두 1박이고 다음 날 캠핑장이라 괜찮아요. 다음 날 전원 사이트에 꼭 연결하세요.</li></ul></section>'+
+   '<section class="block"><h3>캠핑카 금지 사항</h3><ul class="tips">'+
+   '<li class="warn"><b>운행 금지 도로:</b> 크라운 레인지(퀸즈타운–와나카), 스키퍼스 로드, 트레블콘 입구 너머 마운트 아스파이어링 도로, 볼 헛 로드(마운트 쿡), 비포장도로(12km 미만 캠핑장·관광지 진입로는 예외). 위반하면 보험이 무효가 됩니다.</li>'+
+   '<li>제한속도 90km/h, 차량 안과 5m 이내 흡연·전자담배 금지.</li>'+
+   '<li>노지 위반 벌금·주차 위반은 카드로 청구되고 건당 최대 NZ$35 처리 수수료가 붙어요.</li>'+
+   '<li>사고가 나면 시간·장소·상대방 정보를 기록하고, 잘못을 인정하지 말고, 24시간 안에 maui에 연락하세요.</li>'+
+   '<li>500km마다 오일·냉각수를 확인하고, 경고등이 켜지면 바로 maui에 알리세요.</li></ul></section>'+
+   '<section class="block"><h3>시차</h3><table class="info">'+
    '<tr><td>시드니 (12월)</td><td>한국보다 +2시간</td></tr>'+
    '<tr><td>뉴질랜드 (12월)</td><td>한국보다 +4시간, 시드니보다 +2시간</td></tr></table></section>'+
    '<section class="block"><h3>긴급 연락</h3><table class="info">'+
@@ -490,7 +549,7 @@ function infoView(){
    '<tr><td>12/19 푸카키</td><td>무료 노지</td></tr><tr><td>12/20–22 테카포</td><td>NZ$152 (2박)</td></tr>'+
    '<tr><td>12/22 티마루</td><td>노지 (유료 야간주차 예정)</td></tr><tr><td>12/23 아카로아</td><td>NZ$74 (시트 메모)</td></tr></table></section>'+
    '<section class="block"><h3>노지 캠핑 규칙</h3><p class="prose">뉴질랜드 노지는 대부분 셀프 컨테인드 인증 차량만 허용되고, 2026년 6월 7일부터는 차량에 그린 워런트 카드가 보이게 부착되어 있어야 합니다. 허용된 구역에서만, 표지판에 적힌 박수 제한을 지키세요.</p><p class="prose">퀸즈타운·와나카 지역은 지정된 주차장에서만 노지가 가능하고, 맥켄지 지역(테카포·푸카키)도 표지판이 있는 곳 외에는 금지입니다.</p></section>'+
-   '<section class="block"><h3>운전</h3><p class="prose">좌측 통행, 일차선 다리에서는 표지판의 우선 방향을 확인하세요. 내륙은 주유소 간격이 넓으니 테아나우·와나카·트위젤·테카포에서 미리 채우는 게 안전합니다.</p></section>';
+   '<section class="block"><h3>운전</h3><p class="prose">좌측 통행, 캠핑카 제한속도 90km/h. 일차선 다리에서는 표지판의 우선 방향을 확인하세요. 내륙은 주유소 간격이 넓으니 테아나우·와나카·트위젤·테카포에서 미리 채우는 게 안전합니다.</p></section>';
 }
 
 function render(){
@@ -528,6 +587,31 @@ if ("serviceWorker" in navigator) {
 }
 window.addEventListener("offline", () => setSync("오프라인이에요. 체크와 메모는 이 기기에 저장됩니다."));
 window.addEventListener("online", () => setSync("체크와 메모는 이 기기에 저장됩니다."));
+/* ---------- 예약 서류 (IndexedDB, 이 기기에만) ---------- */
+function docDB(){ return new Promise((res,rej)=>{ const r=indexedDB.open("honeymoon-docs",1); r.onupgradeneeded=()=>r.result.createObjectStore("docs",{keyPath:"id"}); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); }); }
+async function docTx(mode, fn){ const db=await docDB(); return new Promise((res,rej)=>{ const tx=db.transaction("docs",mode); const req=fn(tx.objectStore("docs")); tx.oncomplete=()=>res(req ? req.result : undefined); tx.onerror=()=>rej(tx.error); }); }
+async function loadDocs(){
+  const box=document.getElementById("docs"); if(!box) return;
+  let list=[]; try { list = await docTx("readonly", st=>st.getAll()); } catch(e){ box.innerHTML='<p class="sub">이 브라우저에서는 파일을 저장할 수 없어요.</p>'; return; }
+  list.sort((a,b)=>a.added-b.added);
+  box.innerHTML = list.length ? '<ul class="list">'+list.map(d=>'<li><div class="body"><div class="nm">'+esc(d.name)+'</div><div class="ds">'+Math.max(1,Math.round(d.size/1024))+'KB</div></div><div class="acts"><button class="mini on" data-docopen="'+d.id+'">열기</button><button class="mini" data-docdel="'+d.id+'">삭제</button></div></li>').join("")+'</ul>' : '<p class="sub">아직 저장된 서류가 없어요. 메일로 받은 PDF를 폰에 내려받은 뒤 파일 추가를 눌러 주세요.</p>';
+  const inp=document.getElementById("docfile");
+  if (inp) inp.onchange = async () => {
+    const files=[...inp.files]; if(!files.length) return;
+    try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch(e){}
+    for (const f of files){ await docTx("readwrite", st=>st.put({id:Date.now()+"-"+Math.random().toString(36).slice(2,7), name:f.name, type:f.type, size:f.size, blob:f, added:Date.now()})); }
+    inp.value=""; await loadDocs();
+    const m=document.getElementById("docmsg"); if(m) m.textContent = files.length+"개 저장됨";
+  };
+}
+document.addEventListener("click", async e=>{
+  const o=e.target.closest("[data-docopen]"), d=e.target.closest("[data-docdel]");
+  if (o){ const rec = await docTx("readonly", st=>st.get(o.dataset.docopen)); if(!rec) return;
+    const url=URL.createObjectURL(rec.blob); const a=document.createElement("a"); a.href=url; a.target="_blank"; a.rel="noopener"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),60000); }
+  if (d){ if(!confirm("이 서류를 이 폰에서 지울까요?")) return; await docTx("readwrite", st=>st.delete(d.dataset.docdel)); loadDocs(); }
+});
+const _render = render;
+render = function(){ _render(); if (tab==="info") loadDocs(); };
 render();
 </script>
 </body>
