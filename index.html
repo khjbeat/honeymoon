@@ -174,25 +174,33 @@ nav.tabs button[aria-selected="true"]{color:var(--lake);font-weight:700}
 <script>
 const G = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
 const DIR = (o,d,w) => "https://www.google.com/maps/dir/?api=1" + (o ? "&origin=" + encodeURIComponent(o) : "") + "&destination=" + encodeURIComponent(d) + (w ? "&waypoints=" + encodeURIComponent(w) : "") + "&travelmode=driving";
+const TRANSIT = (o,d) => "https://www.google.com/maps/dir/?api=1" + (o ? "&origin=" + encodeURIComponent(o) : "") + "&destination=" + encodeURIComponent(d) + "&travelmode=transit";
+const UBER = d => "https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff%5Bformatted_address%5D=" + encodeURIComponent(d);
+const VIEW_SYD = "View Sydney, 17 Blue Street, North Sydney NSW";
+const MANTRA = "Mantra on Kent, 433 Kent Street, Sydney NSW";
+const SYD_T1 = "Sydney International Airport T1";
 const NEO_PARK = "햇내로28번길 10, 운서동, 인천";
 const MAUI_ZQN = "9 Purple Ash Avenue, Frankton, Queenstown 9300";
 const MAUI_CHC = "159 Orchard Road, Harewood, Christchurch 8051";
 
 const DAYS = [
  {date:"2026-12-13", c:"au", place:"시드니", title:"출국, 시드니 도착",
-  stay:{kind:"hotel", name:"뷰 시드니", meta:"12/13–15 · 2박 (호텔)", q:"View Sydney hotel"},
+  stay:{kind:"hotel", name:"뷰 시드니", meta:"12/13–15 · 2박 · 노스시드니 17 Blue St (예약 주소와 같은지 확인)", q:VIEW_SYD},
   times:[["04:30","집에서 자차로 출발"],["05:20","네오파킹 더예스클라우드 주차 (지하 4~5층)"],["05:30","카카오T 택시로 인천공항 2터미널"],["05:50","2터미널 도착, 체크인"],["08:00","이륙"],["20:05","시드니 도착 (호주 시각)"]],
   legs:[["집","네오파킹 더예스클라우드","일요일 새벽 약 50분~1시간 (현재 위치에서 길찾기)","",NEO_PARK],
         ["더예스클라우드","인천공항 2터미널","택시 약 15~20분 · 카카오T로 호출",NEO_PARK,"Incheon International Airport Terminal 2"]],
+  moves:[{t:"시드니 공항(T1) → 뷰 시드니",rec:"밤 9시 넘어 짐 들고 이동이라 택시·우버 추천",how:"택시: 도착층 택시 승강장, 약 30분. 대중교통: T8 공항선으로 센트럴(또는 타운홀·윈야드)까지 간 뒤 노스시드니 방면 T1·T9 기차나 메트로로 환승, 약 40~50분",cost:"대중교통은 1인당 기차 요금 + 공항역 이용료 A$18.61. 둘이면 택시와 큰 차이 없어요",o:SYD_T1,d:VIEW_SYD}],
   eat:[],
   todo:[["네오파킹 더예스클라우드","햇내로28번길 10 (운서역 근처). 지하 4~5층 안 빈자리에 자유 주차, 다른 층에 대면 하루 3~5만 원 현장 요금. 주차 후 층·위치 사진 찍기",NEO_PARK],
         ["공항 → 시내","공항 철도(T8)는 교통카드 없이 신용카드 태그로 탑승 가능",null]],
   tips:[["warn","<b>호주 ETA</b> 승인 여부를 출국 전 다시 확인하세요."],["warn","<b>호주 입국카드</b>에서 음식 항목은 무조건 Yes로 신고하세요. 신고한 음식은 검사 후 돌려받거나 폐기만 되고 벌금은 없어요."],["","주차 예약은 13일 03:00 ~ 27일 23:00이에요. 같은 날 한두 시간 차이는 괜찮아요. 짐이 많으면 택시는 큰 차로 부르세요."],["","시드니는 한국보다 2시간 빠릅니다."]]
  },
  {date:"2026-12-14", c:"au", place:"시드니", title:"본다이에서 쿠지까지 바닷길 걷기",
-  stay:{kind:"hotel", name:"뷰 시드니", meta:"2박째", q:"View Sydney hotel"},
+  stay:{kind:"hotel", name:"뷰 시드니", meta:"2박째 · 노스시드니", q:VIEW_SYD},
   times:[["오전","본다이에서 브런치 후 아이스버그 풀"],["낮","본다이 → 타마라마 → 브론테 → 클로벨리 → 쿠지 해안 산책 (약 6km)"],["오후","쿠지 파빌리온에서 맥주와 피시앤칩스"],["저녁","버스로 복귀, 여유 있으면 천문대·다알링하버"],["이른 취침","내일 04:00 체크아웃"]],
   legs:[["본다이 비치","쿠지 비치","도보 약 6km · 쉬지 않으면 2~3시간, 수영·사진·식사 포함 6~8시간","Bondi Icebergs Pool","Coogee Beach"]],
+  moves:[{t:"뷰 시드니 → 본다이 비치",rec:"대중교통 (일일 상한이 있어 여러 번 타도 부담 적음)",how:"노스시드니역 → 시내 → T4 본다이 정션행 기차 → 333번 버스로 본다이 비치. 약 50분",cost:"월요일 1인 하루 최대 A$19.30",o:VIEW_SYD,d:"Bondi Beach"},
+ {t:"쿠지 비치 → 숙소",rec:"피곤하면 우버, 아니면 버스",how:"버스로 시내까지 간 뒤 기차로 노스시드니. 본다이로 돌아갈 거면 350번 → 379번",cost:"오늘 일일 상한에 포함",o:"Coogee Beach",d:VIEW_SYD}],
   eat:[["Blackwood Bondi","본다이 비치에서 걸어서 10분, 인기 브런치. 주말엔 웨이팅 (14일은 월요일)","Blackwood Bondi, 87 Glenayr Ave, Bondi Beach"],
        ["Bare Naked Bowls","블랙우드에서 해변 내려가는 길의 아사이볼","Bare Naked Bowls Bondi Beach"],
        ["Coogee Pavilion","산책 끝나고 맥주와 피시앤칩스로 마무리","Coogee Pavilion"]],
@@ -209,11 +217,13 @@ const DAYS = [
  },
  {date:"2026-12-15", c:"nz", place:"테아나우", camper:true, title:"뉴질랜드 입국, 캠핑카 시작",
   stay:{kind:"park", name:"테아나우 레이크뷰 홀리데이 파크", meta:"1박 · NZ$75", q:"Te Anau Lakeview Holiday Park"},
-  times:[["04:00","체크아웃"],["05:00","시드니 공항 도착"],["06:30","시드니 → 퀸즈타운"],["11:10","퀸즈타운 도착 예정 (예약서 기준, NZ 시각)"],["12:00","maui 퀸즈타운 지점에서 캠핑카 수령 (지점 영업 08:00–16:30)"],["수령 직후","장비 점검 + 더캠퍼밴 현지 서포트 카톡 등록"],["14:30","장보기 후 테아나우로 이동"],["17:00~20:00","캠핑장 도착, 바로 전원 연결해 충전 시작"]],
+  times:[["04:00","체크아웃, 예약한 택시·우버로 공항"],["04:30","시드니 공항 도착"],["06:30","시드니 → 퀸즈타운"],["11:10","퀸즈타운 도착 예정 (예약서 기준, NZ 시각)"],["12:00","maui 퀸즈타운 지점에서 캠핑카 수령 (지점 영업 08:00–16:30)"],["수령 직후","장비 점검 + 더캠퍼밴 현지 서포트 카톡 등록"],["14:30","장보기 후 테아나우로 이동"],["17:00~20:00","캠핑장 도착, 바로 전원 연결해 충전 시작"]],
   legs:[["퀸즈타운 공항","maui 퀸즈타운 지점","공항 근처 프랭크턴 · 차로 몇 분","Queenstown Airport",MAUI_ZQN],
         ["maui 퀸즈타운 지점","테아나우","약 170km · 2시간",MAUI_ZQN,"Te Anau Lakeview Holiday Park"]],
   shop:[["Pak'nSave Queenstown","302 Hawthorne Drive, maui 지점 근처. 가장 저렴하고 빵 코너가 좋아요. 첫 큰 장보기는 여기서","Pak'nSave Queenstown 302 Hawthorne Drive"],["New World Wakatipu","리마커블스 파크. 품질 좋은 대형 마트","New World Wakatipu Remarkables Park"],["FreshChoice · Four Square Te Anau","테아나우 시내(30 Town Centre). 빠진 것 보충용","FreshChoice Te Anau"]],
   meals:[["점심","Pak'nSave 베이커리 롤이나 샌드위치로 간단히"],["저녁","첫날은 피곤하니 캠핑장에서 스테이크·샐러드 같은 간단한 요리, 또는 Redcliff 외식"],["장보기","15~17일 아침 3번, 점심 2~3번, 저녁 1~2번 분량. 17일엔 와나카에서 다시 장봐요"]],
+  moves:[{t:"뷰 시드니 → 시드니 공항(T1)",rec:"04:00 출발이라 택시·우버 필수",how:"전날 밤 우버 예약(Reserve)이나 호텔 프런트에 택시 예약. 새벽엔 약 25분",cost:"하버 터널·브리지 통행료 포함, 앱에서 확인",o:VIEW_SYD,d:SYD_T1},
+ {t:"퀸즈타운 공항 → maui 지점",rec:"maui 무료 셔틀",how:"도착 후 maui 셔틀 승차 위치를 확인하거나 0800 688 558로 전화. 셔틀이 없으면 택시·우버로 몇 분",cost:"셔틀 무료",o:"Queenstown Airport",d:"9 Purple Ash Avenue, Frankton, Queenstown"}],
   eat:[["Miles Better Pies","사슴고기 파이로 유명한 파이 가게. 호숫가에서 먹기 좋음","Miles Better Pies Te Anau"],
        ["Redcliff Cafe","테아나우 대표 저녁 식당. 사슴고기·양고기, 예약 권장","Redcliff Cafe Te Anau"],
        ["Sandfly Cafe","아침 커피와 브런치","Sandfly Cafe Te Anau"]],
@@ -276,7 +286,7 @@ const DAYS = [
         ["피터스 룩아웃","푸카키 호수 너머 마운트 쿡 정면 뷰","Peters Lookout"],
         ["푸카키 일출","노지에서 맞는 일출이 이번 여행 하이라이트","Lake Pukaki"]],
   tips:[["warn","<b>노지 조건:</b> 셀프 컨테인드 인증 차량만 가능하고, 2026년 6월 7일부터 차량에 그린 워런트 카드를 부착해야 합니다. 캠핑카 업체에 인증 여부를 꼭 확인하세요."],
-        ["warn","<b>1박 제한·선착순</b>이고 화장실은 몇백 미터 떨어진 재래식입니다. 늦게 가면 자리가 없을 수 있어요."],
+        ["warn","<b>진입로 확인:</b> 노지 주차장까지 길이 비포장이면 렌트 약관 위반이 될 수 있어요. 차량 수령 때 maui에 이 노지에 가도 되는지 물어보세요."],["warn","<b>1박 제한·선착순</b>이고 화장실은 몇백 미터 떨어진 재래식입니다. 늦게 가면 자리가 없을 수 있어요."],
         ["","만석이면 트위젤 근처 루아타니화 호수 서쪽 끝 노지나, 시트에 적어둔 글렌태너 파크(NZ$86)를 대안으로."],["","노지에서는 전자레인지와 벽 콘센트가 작동하지 않아요. 조명·냉장고·물 펌프·히터는 하우스 배터리로 돌아가니 아껴 쓰세요."]]
  },
  {date:"2026-12-20", c:"nz", place:"테카포", camper:true, title:"테카포 호수와 남반구 별",
@@ -294,14 +304,14 @@ const DAYS = [
  },
  {date:"2026-12-21", c:"nz", place:"테카포", camper:true, title:"테카포에서 느긋하게",
   stay:{kind:"park", name:"Lakes Edge Holiday Park", meta:"2박째", q:"Lakes Edge Holiday Park Tekapo"},
-  times:[["오전","마운트 존 정상 산책 또는 차로 오르기"],["오후","알렉산드리나 호수 산책"],["저녁","별 보기 2차"]],
+  times:[["오전","마운트 존 서밋 트랙 걸어서 오르기 (왕복 약 2시간)"],["오후","정상에서 알렉산드리나 호수 내려다보기, 호숫가 휴식"],["저녁","별 보기 2차"]],
   legs:[],
   shop:[["Four Square Tekapo","필요한 것만 보충","Four Square Tekapo"]],
   meals:[["점심","Astro Cafe (마운트 존)"],["저녁","남은 재료로 BBQ 2차"]],
-  eat:[["Astro Cafe","마운트 존 정상 유리 카페. 도로 통행료 있음","Astro Cafe Mount John"],
+  eat:[["Astro Cafe","마운트 존 정상 유리 카페. 정상 도로는 유료 사설 도로라 캠핑카 진입 가능 여부를 입구에서 확인, 안 되면 서밋 트랙으로 걸어서","Astro Cafe Mount John"],
        ["Kohan","어제 못 갔다면","Kohan Restaurant Tekapo"]],
   todo:[["마운트 존 서밋 트랙","호수 전망 하이킹, 왕복 2~3시간","Mount John Summit Track"],
-        ["알렉산드리나 호수","조용한 호숫가 피크닉","Lake Alexandrina"]],
+        ["알렉산드리나 호수","진입로가 자갈길이라 캠핑카로는 가지 마세요(비포장도로 운행 금지). 마운트 존 정상에서 내려다보거나 걸어서","Lake Alexandrina"]],
   tips:[["","내일 티마루로 가기 전 장보기·물 보충하세요."]]
  },
  {date:"2026-12-22", c:"nz", place:"티마루", camper:true, title:"바닷가 도시 티마루",
@@ -328,11 +338,13 @@ const DAYS = [
   tips:[["warn","<b>티마루 노지 다음 날</b>이라 오늘은 전원 사이트에 연결해 충전하세요. 하버뷰 캠퍼밴 사이트가 전원 사이트인지 확인해 두세요."],["","오수 비우기와 청소는 예약에 포함된 Drop and Go 팩으로 지점에서 해줘요. 내일은 연료만 수령 때만큼 채우면 됩니다."]]
  },
  {date:"2026-12-24", c:"au", place:"크라이스트처치 → 시드니", camper:true, title:"캠핑카 반납, 다시 시드니",
-  stay:{kind:"hotel", name:"맨트라 온 켄트", meta:"12/24–27 · 3박 (호텔)", q:"Mantra on Kent Sydney"},
+  stay:{kind:"hotel", name:"맨트라 온 켄트", meta:"12/24–27 · 3박 (호텔)", q:MANTRA},
   times:[["오전","아카로아 출발"],["15:00","maui 크라이스트처치 공항 지점 반납 (권장)"],["16:30","반납 마감 · 지점 영업 종료"],["18:00","크라이스트처치 → 시드니 (NZ 시각)"],["밤","시드니 도착, 호텔 체크인"]],
   legs:[["아카로아","maui 크라이스트처치 공항 지점","약 95km · 1시간 30분","Akaroa TOP 10 Holiday Park",MAUI_CHC]],
   shop:[],
   meals:[["아침","남은 재료 다 먹기"],["정리","남은 음식은 호주 반입 불가라 버리거나, 캠핑장 공용 나눔 선반이 있으면 두고 오기"]],
+  moves:[{t:"maui 지점 → 크라이스트처치 공항",rec:"maui 무료 셔틀",how:"반납할 때 다음 셔틀 시간을 꼭 물어보세요. 지점이 공항에서 약 2.5km 떨어져 있어요",cost:"무료",o:"159 Orchard Road, Harewood, Christchurch",d:"Christchurch Airport"},
+ {t:"시드니 공항(T1) → 맨트라 온 켄트",rec:"T8 기차 한 번이면 가서 대중교통 추천",how:"T8 공항선 → 타운홀역 또는 윈야드역 하차, 걸어서 5~10분. 약 25분",cost:"1인당 기차 요금 + 공항역 이용료 A$18.61",o:SYD_T1,d:MANTRA}],
   eat:[["Mamak (마막)","차이나타운 입구 말레이시아 로띠 맛집, 숙소에서 걸어갈 거리. 예약 안 받고 줄 서지만 빨리 빠짐. 로띠 짜나이·사테·아얌 고렝, 디저트로 로띠 티수. 저녁 영업 22:00까지(목요일 기준)라 늦은 도착 날 저녁으로 좋아요. 크리스마스이브 영업시간은 확인","Mamak Haymarket 15 Goulburn Street"],["마틴 플레이스 크리스마스 마켓","24일이 올해 마지막 날, 11:00~21:15. 도착이 빠르면 들러볼 만해요. 숙소에서 걸어갈 거리","Martin Place Sydney"],["Woolworths Sydney Town Hall","도착 후 영업 중이면 납작복숭아 찾아보기. 크리스마스 당일은 휴무라 늦은 도착이면 영업시간 먼저 확인","Woolworths Town Hall Sydney"]],
   todo:[["maui 크라이스트처치 공항 지점","159 Orchard Road, Harewood. 반납 후 공항 터미널까지 가는 방법을 지점에 확인",MAUI_CHC],
         ["반납 전 할 일","연료를 수령 때만큼 채우기(부족분 리터당 NZ$5), 쓰레기 봉투에 담기, 차량 사진 찍기. 오수·청소는 Drop and Go 팩 포함",null]],
@@ -340,9 +352,10 @@ const DAYS = [
         ["","크리스마스 이브라 시드니 늦은 시간 식당이 일찍 닫을 수 있어요."]]
  },
  {date:"2026-12-25", c:"au", place:"시드니", title:"시드니의 크리스마스",
-  stay:{kind:"hotel", name:"맨트라 온 켄트", meta:"2박째", q:"Mantra on Kent Sydney"},
+  stay:{kind:"hotel", name:"맨트라 온 켄트", meta:"2박째", q:MANTRA},
   times:[["낮","해변 또는 하버 산책"],["저녁","크리스마스 저녁 (예약 권장)"]],
   legs:[],
+  moves:[{t:"시내 이동",rec:"걷기 + 대중교통",how:"공휴일이라 기차·버스가 휴일 시간표로 운행해요. 마틴 플레이스, 서큘러 키는 숙소에서 걸어서 갈 수 있어요",cost:"공휴일 1인 하루 최대 A$9.65",o:MANTRA,d:"Circular Quay"}],
   eat:[],
   todo:[["다알링하버 크리스마스 트리","12/26까지 운영","Cockle Bay Darling Harbour"],
         ["오페라하우스 · 서큘러 키","하버 산책. 서큘러 키 난간에서 찍는 오페라하우스 뷰가 사진 명소","Circular Quay"],
@@ -352,9 +365,11 @@ const DAYS = [
   tips:[["warn","<b>크리스마스 당일</b>은 대부분의 상점이 닫고 대중교통도 휴일 시간표입니다. 식사는 미리 예약하거나 24일에 사 두세요."]]
  },
  {date:"2026-12-26", c:"au", place:"시드니", title:"박싱데이, 시드니–호바트 요트 레이스",
-  stay:{kind:"hotel", name:"맨트라 온 켄트", meta:"3박째", q:"Mantra on Kent Sydney"},
+  stay:{kind:"hotel", name:"맨트라 온 켄트", meta:"3박째", q:MANTRA},
   times:[["10:00","더 록스 마켓 (서큘러 키 옆)"],["11:00","왓슨스 베이·닐슨 파크 쪽으로 이동 (페리·버스는 공휴일 시간표)"],["12:00 전","관람 장소 자리 잡기"],["13:00","시드니–호바트 요트 레이스 출발"],["오후","시내 복귀, 패디스 마켓·박싱데이 쇼핑"],["저녁","The Oaks (뉴트럴 베이) 또는 마틴 플레이스 트리 쇼"]],
   legs:[],
+  moves:[{t:"서큘러 키 → 닐슨 파크·왓슨스 베이",rec:"페리 또는 버스, 일찍 출발",how:"서큘러 키에서 왓슨스 베이행 페리, 또는 버스. 레이스 날이라 붐비니 11시 전 출발",cost:"토요일 1인 하루 최대 A$9.65",o:"Circular Quay",d:"Nielsen Park Vaucluse"},
+ {t:"시내 → The Oaks (뉴트럴 베이)",rec:"우버 약 15분, 또는 윈야드에서 버스",how:"하버브리지 건너 밀리터리 로드. 돌아올 때도 우버가 편해요",cost:"앱에서 확인",o:MANTRA,d:"The Oaks Hotel Neutral Bay"}],
   eat:[["Woolworths Sydney Town Hall","납작복숭아(Flat Peach) 찾아보기. 숙소에서 걸어갈 거리. 입고는 매장마다 달라서 없을 수도 있어요","Woolworths Town Hall Sydney"],
        ["Betty's Burgers","호주산 앵거스 비프 수제버거와 어니언링. 구글 평점 4.5, 1인 A$20~40","Betty's Burgers Sydney"],
        ["The Brothers cafe","폭신한 수플레 팬케이크, 흑임자 팬케이크 추천. 평점 4.2","The Brothers cafe Sydney"],
@@ -373,6 +388,7 @@ const DAYS = [
   stay:null,
   times:[["07:30","호텔 체크아웃 (권장)"],["10:20","시드니 출발"],["19:00","인천공항 2터미널 도착"],["입국 후","5번 출구 → 신호등 건너 왼쪽 '영종도' 택시 승강장 → 더예스클라우드"],["23:00까지","출차 (주차 예약 종료)"]],
   legs:[["인천공항 2터미널","네오파킹 더예스클라우드","택시 약 15~20분","Incheon International Airport Terminal 2",NEO_PARK]],
+  moves:[{t:"맨트라 온 켄트 → 시드니 공항(T1)",rec:"T8 기차 추천, 짐이 많으면 우버",how:"타운홀역 또는 윈야드역에서 T8 공항선, 약 20분. 07:30 출발",cost:"일요일 상한 A$9.65 + 공항역 이용료 A$18.61 (1인)",o:MANTRA,d:SYD_T1}],
   eat:[],
   todo:[],
   tips:[["","국제선은 2~3시간 전 공항 도착을 권장합니다."],["warn","<b>비행기가 늦어 27일 23:00을 넘기면</b> 네오파킹 카카오톡 채널에서 상담원 연결로 연장을 요청하세요."],["","장시간 비행 후 운전이니 덜 피곤한 사람이 운전하고, 졸리면 쉬었다 출발하세요."]]
@@ -424,7 +440,11 @@ const CHECK = [
  {id:"a15",t:"thl RoadTrip 앱 설치 (금지 도로 확인용)",s:"추가"},
  {id:"a16",t:"테아나우·테카포·아카로아가 전원(파워) 사이트인지 확인",s:"추가"},
  {id:"a17",t:"현지에서 연락되는 휴대폰 번호 (로밍 또는 지점 무료 SIM)",s:"추가"},
- {id:"a18",t:"더캠퍼밴 안내 PDF 2개도 앱에 저장",s:"추가"}
+ {id:"a18",t:"더캠퍼밴 안내 PDF 2개도 앱에 저장",s:"추가"},
+ {id:"a22",t:"수령 때 maui에 경로 확인 (푸카키 노지 진입로, 마운트 존 도로)",s:"추가"},
+ {id:"a19",t:"우버 앱 설치·카드 등록 (두 사람 모두)",s:"추가"},
+ {id:"a20",t:"컨택리스 되는 카드 각자 1장씩 (트래블 카드 추천)",s:"추가"},
+ {id:"a21",t:"14일 밤 15일 새벽 공항 택시·우버 예약",s:"추가"}
 ];
 
 /* ---------- state (browser + shared db) ---------- */
@@ -575,6 +595,7 @@ function dayView(){
   }
   if (d.times.length) h += '<section class="block"><h3>시간표</h3><ul class="timeline">'+d.times.map(t=>'<li><span class="t">'+esc(t[0])+'</span>'+esc(t[1])+'</li>').join("")+'</ul></section>';
   if (d.legs.length) h += '<section class="block"><h3>이동</h3>'+d.legs.map(l=>'<div class="leg"><div class="ft">'+esc(l[0])+' → '+esc(l[1])+'</div><div class="km">'+esc(l[2])+'</div><div class="links"><a class="btn" target="_blank" rel="noopener" href="'+DIR(l[3],l[4],l[5])+'">길찾기</a></div></div>').join("")+'</section>';
+  if (d.moves && d.moves.length) h += '<section class="block"><h3>이동 방법</h3>'+d.moves.map(m=>'<div class="leg"><div class="ft">'+esc(m.t)+'</div><div class="km" style="color:var(--lake);font-weight:500">추천: '+esc(m.rec)+'</div><div class="km">'+esc(m.how)+'</div><div class="km">요금: '+esc(m.cost)+'</div><div class="links"><a class="btn" target="_blank" rel="noopener" href="'+TRANSIT(m.o,m.d)+'">실시간 대중교통</a><a class="btn" target="_blank" rel="noopener" href="'+UBER(m.d)+'">우버 부르기</a></div></div>').join("")+'<p class="sub">실시간 대중교통 버튼은 지금 시각 기준 경로와 도착 시간을 보여줘요. 우버 버튼은 현재 위치에서 목적지가 입력된 상태로 열려요.</p></section>';
   if (d.meals && d.meals.length) h += '<section class="block"><h3>끼니 계획</h3><ul class="tips">'+d.meals.map(m=>'<li><b>'+esc(m[0])+'</b> · '+esc(m[1])+'</li>').join("")+'</ul></section>';
   if (d.shop && d.shop.length) h += '<section class="block"><h3>마트</h3><ul class="list">'+d.shop.map((e,i)=>placeRow("s",i,e,sel)).join("")+'</ul></section>';
   if (d.eat.length) h += '<section class="block"><h3>먹을 곳</h3><ul class="list">'+d.eat.map((e,i)=>placeRow("e",i,e,sel)).join("")+'</ul></section>';
@@ -622,6 +643,14 @@ function checkView(){
 }
 function infoView(){
   return '<section class="block"><h3>예약 서류</h3><p class="prose">maui 예약 확인서, 렌트 약관, 운전 서약서를 이 폰에 저장해 두면 인터넷 없이도 열 수 있어요. 파일은 이 폰에만 저장되고 인터넷에 올라가지 않아요.</p><div id="docs"></div><label class="btn primary" style="margin-top:10px">파일 추가<input id="docfile" type="file" accept="application/pdf,image/*" multiple style="display:none"></label><div class="saved" id="docmsg"></div></section>'+
+   '<section class="block"><h3>교통비 내는 법</h3><ul class="tips">'+
+   '<li><b>시드니 대중교통</b>은 기차·메트로·버스·페리 모두 교통카드 없이 <b>컨택리스 신용·체크카드</b>(비자·마스터·아멕스)나 휴대폰 결제를 단말기에 찍으면 돼요. 탈 때와 내릴 때 둘 다 찍으세요.</li>'+
+   '<li class="warn"><b>한 사람당 카드 한 장</b>이에요. 카드 하나로 두 명 요금을 낼 수 없어서, 두 분이 각자 다른 카드나 폰으로 찍어야 해요. 현금은 받지 않아요.</li>'+
+   '<li><b>일일 상한:</b> 월~목 1인 A$19.30, 금~일·공휴일 A$9.65. 상한을 넘으면 그날은 무료예요. 같은 카드로 계속 찍어야 적용돼요.</li>'+
+   '<li><b>공항역 이용료</b> 1인 A$18.61은 상한과 별도로 공항역을 지날 때마다 붙어요. 둘이면 택시·우버와 비용 차이가 크지 않아요.</li>'+
+   '<li>해외 결제 수수료가 없는 트래블 카드(비자·마스터)를 쓰면 좋아요. 폰 결제는 한국 카드가 해외 컨택리스를 지원하는지 출국 전에 확인하고, 안 되면 실물 카드를 찍으세요.</li>'+
+   '<li><b>택시·우버:</b> 시드니, 퀸즈타운, 크라이스트처치 모두 우버를 쓸 수 있어요. 출국 전에 우버 앱을 깔고 카드를 등록해 두세요.</li>'+
+   '<li><b>실시간 경로:</b> 일정의 "실시간 대중교통" 버튼(구글맵)이나 Transport NSW 앱(TripView 등)으로 지금 출발 기준 시간을 확인하세요.</li></ul></section>'+
    '<section class="block"><h3>캠핑카 예약 (maui)</h3><table class="info">'+
    '<tr><td>차량</td><td>Ultima Plus Elite 2+1 Berth</td></tr>'+
    '<tr><td>수령</td><td>12/15(화) 퀸즈타운 지점<br>9 Purple Ash Avenue, Frankton<br>영업 08:00–16:30 · <a target="_blank" rel="noopener" href="'+G(MAUI_ZQN)+'">지도</a></td></tr>'+
